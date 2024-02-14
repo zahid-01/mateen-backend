@@ -51,6 +51,27 @@ app.post("/getUser", async (req, res) => {
   });
 });
 
+//Update
+app.patch("/update", async (req, res) => {
+  const { email, update } = req.body;
+  const user = await User.findOneAndUpdate({ email }, update);
+
+  res.status(200).json({
+    message: "Updated user",
+    update,
+  });
+});
+
+//Delete
+app.delete("/delUser", async (req, res) => {
+  const email = req.body.email;
+  const user = await User.findOneAndDelete({ email });
+
+  res.status(202).json({
+    user,
+  });
+});
+
 app.use((err, req, res, next) => {
   res.status(500).json({
     err,
